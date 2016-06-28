@@ -950,6 +950,12 @@ cdef class Message:
 
     @classmethod
     def deserialise(cls, buf):
+        """
+        deserialise(buf)
+
+        Create a new :class:`!Message` object from its on-the-wire byte string
+        representation.
+        """
         return cls(_deserialising, buf)
 
     def __dealloc__(self):
@@ -1047,6 +1053,12 @@ cdef class Message:
             self._add('b', value)
 
     def serialise(self):
+        """
+        serialise()
+
+        Serialise this :class:`!Message` object to its on-the-wire byte string
+        representation.
+        """
         cdef size_t length = 0
         cdef char* buf = <char*> lo_message_serialise(
             self._message, self._path, NULL, &length)
