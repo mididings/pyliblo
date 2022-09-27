@@ -9,8 +9,11 @@ include examples/*.py
 # build
 include setup.py
 
-# extension code
+# extension source
 include src/*.pyx src/*.pxd
+
+# python source
+include liblo/*.pyi
 
 # scripts
 include scripts/*_osc
