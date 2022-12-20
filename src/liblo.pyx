@@ -267,8 +267,10 @@ cdef int _callback_num_args(func):
     """
     Return the number of arguments that should be passed to callback *func*.
     """
-    getargspec = (_inspect.getargspec if PY_VERSION_HEX < 0x03000000
-             else _inspect.getfullargspec)
+    if PY_VERSION_HEX < 0x03000000:
+        getargspec = _inspect.getargspec
+    else:
+        getargspec = _inspect.getfullargspec
 
     if isinstance(func, _functools.partial):
         # before Python 3.4, getargspec() did't work for functools.partial,
