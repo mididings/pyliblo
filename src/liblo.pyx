@@ -217,20 +217,20 @@ cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,
 
     for i from 0 <= i < argc:
         t = types[i]
-        if   t == 'i': v = argv[i].i
-        elif t == 'h': v = argv[i].h
-        elif t == 'f': v = argv[i].f
-        elif t == 'd': v = argv[i].d
-        elif t == 'c': v = chr(argv[i].c)
-        elif t == 's': v = _decode(&argv[i].s)
-        elif t == 'S': v = _decode(&argv[i].s)
-        elif t == 'T': v = True
-        elif t == 'F': v = False
-        elif t == 'N': v = None
-        elif t == 'I': v = float('inf')
-        elif t == 'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
-        elif t == 't': v = _timetag_to_double(argv[i].t)
-        elif t == 'b':
+        if   t == b'i': v = argv[i].i
+        elif t == b'h': v = argv[i].h
+        elif t == b'f': v = argv[i].f
+        elif t == b'd': v = argv[i].d
+        elif t == b'c': v = chr(argv[i].c)
+        elif t == b's': v = _decode(&argv[i].s)
+        elif t == b'S': v = _decode(&argv[i].s)
+        elif t == b'T': v = True
+        elif t == b'F': v = False
+        elif t == b'N': v = None
+        elif t == b'I': v = float('inf')
+        elif t == b'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
+        elif t == b't': v = _timetag_to_double(argv[i].t)
+        elif t == b'b':
             if PY_VERSION_HEX >= 0x03000000:
                 v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
             else:
@@ -957,37 +957,37 @@ cdef class Message:
         # accept both bytes and unicode as type specifier
         cdef char t = ord(_decode(type)[0])
 
-        if t == 'i':
+        if t == b'i':
             lo_message_add_int32(self._message, int(value))
-        elif t == 'h':
+        elif t == b'h':
             lo_message_add_int64(self._message, long(value))
-        elif t == 'f':
+        elif t == b'f':
             lo_message_add_float(self._message, float(value))
-        elif t == 'd':
+        elif t == b'd':
             lo_message_add_double(self._message, float(value))
-        elif t == 'c':
+        elif t == b'c':
             lo_message_add_char(self._message, ord(value))
-        elif t == 's':
+        elif t == b's':
             s = _encode(value)
             lo_message_add_string(self._message, s)
-        elif t == 'S':
+        elif t == b'S':
             s = _encode(value)
             lo_message_add_symbol(self._message, s)
-        elif t == 'T':
+        elif t == b'T':
             lo_message_add_true(self._message)
-        elif t == 'F':
+        elif t == b'F':
             lo_message_add_false(self._message)
-        elif t == 'N':
+        elif t == b'N':
             lo_message_add_nil(self._message)
-        elif t == 'I':
+        elif t == b'I':
             lo_message_add_infinitum(self._message)
-        elif t == 'm':
+        elif t == b'm':
             for n from 0 <= n < 4:
                 midi[n] = value[n]
             lo_message_add_midi(self._message, midi)
-        elif t == 't':
+        elif t == b't':
             lo_message_add_timetag(self._message, _double_to_timetag(value))
-        elif t == 'b':
+        elif t == b'b':
             b = _Blob(value)
             # make sure the blob is not deleted as long as this message exists
             self._keep_refs.append(b)
