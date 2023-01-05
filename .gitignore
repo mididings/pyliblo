@@ -1,7 +1,6 @@
-/build
-/dist
-/src/liblo.c
-/doc/build
-liblo*.so
-pyliblo.egg-info
-wheel-*.egg
+build
+dist
+__pycache__
+*.egg-info
+src/*.c
+doc/build
