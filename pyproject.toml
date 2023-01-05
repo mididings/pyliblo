@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools", "wheel", "Cython",]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyliblo"
+version = "0.10.0"
+description = 'Python bindings for the liblo OSC library'
+readme = "README"
+requires-python = ">=3.7"
+license = {file = "COPYING"}
+authors = [{name = "Dominic Sacré", email = "dominic.sacre@gmx.de"},]
+maintainers = [{name = "George Rawlinson", email = "george@rawlinson.net.nz"},]
+classifiers = [
+  "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
+]
+
+
+[project.urls]
+homepage = "https://github.com/mididings/pyliblo"
+documentation = "https://mididings.github.io/pyliblo/"
