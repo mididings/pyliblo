@@ -1,14 +1,25 @@
-include README
-include COPYING
-include NEWS
-include setup.py
-include src/liblo.pyx
-include src/liblo.pxd
-include scripts/dump_osc
-include scripts/send_osc
-include scripts/dump_osc.1
-include scripts/send_osc.1
-include test/*.py
-include examples/*.py
+# general documentation
+include README COPYING NEWS
+
+# module documentation
 graft doc
 prune doc/build
+include examples/*.py
+
+# build
+include setup.py
+
+# extension code
+include src/*.pyx src/*.pxd
+
+# scripts
+include scripts/*_osc
+
+# man pages
+include scripts/*.1
+
+# test suite
+include test/*.py
+
+# exclusions
+exclude .gitignore
