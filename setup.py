@@ -20,20 +20,7 @@ except ImportError:
 from Cython.Distutils import build_ext
 
 
-class build_scripts_rename(build_scripts):
-    def copy_scripts(self):
-        build_scripts.copy_scripts(self)
-        # remove the .py extension from scripts
-        for s in self.scripts:
-            f = util.convert_path(s)
-            before = os.path.join(self.build_dir, os.path.basename(f))
-            after = os.path.splitext(before)[0]
-            log.info("renaming %s -> %s" % (before, after))
-            os.rename(before, after)
-
-
 cmdclass = {
-    'build_scripts': build_scripts_rename,
     'build_ext': build_ext,
 }
 
@@ -60,8 +47,8 @@ setup(
     description = 'Python bindings for the liblo OSC library',
     license = 'LGPL',
     scripts = [
-        'scripts/send_osc.py',
-        'scripts/dump_osc.py',
+        'scripts/send_osc',
+        'scripts/dump_osc',
     ],
     data_files = [
         ('share/man/man1', [

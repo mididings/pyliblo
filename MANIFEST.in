@@ -4,8 +4,8 @@ include NEWS
 include setup.py
 include src/liblo.pyx
 include src/liblo.pxd
-include scripts/dump_osc.py
-include scripts/send_osc.py
+include scripts/dump_osc
+include scripts/send_osc
 include scripts/dump_osc.1
 include scripts/send_osc.1
 include test/*.py
