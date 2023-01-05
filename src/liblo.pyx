@@ -14,7 +14,7 @@ __version__ = '0.10.0'
 
 from cpython cimport PY_VERSION_HEX
 cdef extern from 'Python.h':
-    void PyEval_InitThreads()
+    void Py_Initialize()
 
 from libc.stdlib cimport malloc, free
 from libc.math cimport modf
@@ -719,7 +719,7 @@ cdef class ServerThread(_ServerBase):
             cs = NULL
 
         # make sure python can handle threading
-        PyEval_InitThreads()
+        Py_Initialize()
 
         global __exception
         __exception = None
