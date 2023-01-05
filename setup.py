@@ -35,6 +35,7 @@ setup(
                 ],
             ),
         ],
+        language_level=3,
     ),
     zip_safe=False,
 )
