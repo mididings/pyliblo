@@ -569,27 +569,27 @@ cdef class _ServerBase:
         self._check()
         _send(target, self, args)
 
-    property url:
+    @property
+    def url(self):
         """
         The server's URL.
         """
-        def __get__(self):
-            return self.get_url()
+        return self.get_url()
 
-    property port:
+    @property
+    def port(self):
         """
         The server's port number.
         """
-        def __get__(self):
-            return self.get_port()
+        return self.get_port()
 
-    property protocol:
+    @property
+    def protocol(self):
         """
         The server's protocol (one of the constants :const:`UDP`,
         :const:`TCP`, or :const:`UNIX`).
         """
-        def __get__(self):
-            return self.get_protocol()
+        return self.get_protocol()
 
 
 cdef class Server(_ServerBase):
@@ -850,34 +850,34 @@ cdef class Address:
     def set_slip_enabled(self, enable):
         lo_address_set_stream_slip(self._address, int(enable))
 
-    property url:
+    @property
+    def url(self):
         """
         The address's URL.
         """
-        def __get__(self):
-            return self.get_url()
+        return self.get_url()
 
-    property hostname:
+    @property
+    def hostname(self):
         """
         The address's hostname.
         """
-        def __get__(self):
-            return self.get_hostname()
+        return self.get_hostname()
 
-    property port:
+    @property
+    def port(self):
         """
         The address's port number.
         """
-        def __get__(self):
-            return self.get_port()
+        return self.get_port()
 
-    property protocol:
+    @property
+    def protocol(self):
         """
         The address's protocol (one of the constants :const:`UDP`,
         :const:`TCP`, or :const:`UNIX`).
         """
-        def __get__(self):
-            return self.get_protocol()
+        return self.get_protocol()
 
 
 ################################################################################
@@ -1067,29 +1067,29 @@ cdef class Message:
         finally:
             free(buf)
 
-    property path:
+    @property
+    def path(self):
         """
         The path of this :class:`!Message`
         """
-        def __get__(self):
-            return _decode(self._path)
+        return _decode(self._path)
 
-    property types:
+    @property
+    def types(self):
         """
         A string of the typetags of the arguments of this :class:`!Message`
         """
-        def __get__(self):
-            cdef char* buf = lo_message_get_types(self._message)
-            return _decode(buf)
+        cdef char* buf = lo_message_get_types(self._message)
+        return _decode(buf)
 
-    property args:
+    @property
+    def args(self):
         """
         A list of the argument values of this :class:`!Message`
         """
-        def __get__(self):
-            return _extract_args(
-                lo_message_get_types(self._message),
-                lo_message_get_argv(self._message))
+        return _extract_args(
+            lo_message_get_types(self._message),
+            lo_message_get_argv(self._message))
 
 
 ################################################################################
