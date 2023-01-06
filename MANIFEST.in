@@ -20,6 +20,3 @@ include scripts/*.1
 
 # test suite
 include test/*.py
-
-# exclusions
-exclude .gitignore
