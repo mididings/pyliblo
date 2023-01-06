@@ -35,12 +35,8 @@ class _weakref_method:
 
     def __init__(self, f):
         if _inspect.ismethod(f):
-            if PY_VERSION_HEX >= 0x03000000:
-                self._func = f.__func__
-                self.obj = _weakref.ref(f.__self__)
-            else:
-                self._func = f.im_func
-                self.obj = _weakref.ref(f.im_self)
+            self._func = f.__func__
+            self.obj = _weakref.ref(f.__self__)
         else:
             self._func = f
             self.obj = None
@@ -63,8 +59,8 @@ class struct:
 
 
 cdef str _decode(s):
-    # convert to standard string type, depending on python version
-    if PY_VERSION_HEX >= 0x03000000 and isinstance(s, bytes):
+    # convert bytestring to standard string type
+    if isinstance(s, bytes):
         return s.decode()
     else:
         return s
@@ -229,16 +225,7 @@ cdef list _extract_args(const_char *types, lo_arg **argv):
         elif t == b'I': v = float('inf')
         elif t == b'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
         elif t == b't': v = _timetag_to_double(argv[i].t)
-        elif t == b'b':
-            if PY_VERSION_HEX >= 0x03000000:
-                v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
-            else:
-                # convert binary data to python list
-                v = []
-                ptr = <unsigned char*>lo_blob_dataptr(argv[i])
-                size = lo_blob_datasize(argv[i])
-                for j from 0 <= j < size:
-                    v.append(ptr[j])
+        elif t == b'b': v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
         else:
             v = None  # unhandled data type
         args.append(v)
