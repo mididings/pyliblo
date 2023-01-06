@@ -12,7 +12,6 @@
 __version__ = '0.10.0'
 
 
-from cpython cimport PY_VERSION_HEX
 cdef extern from 'Python.h':
     void Py_Initialize()
 
@@ -257,15 +256,10 @@ cdef int _callback_num_args(func):
     """
     Return the number of arguments that should be passed to callback *func*.
     """
-    if PY_VERSION_HEX < 0x03000000:
-        getargspec = _inspect.getargspec
-    else:
-        getargspec = _inspect.getfullargspec
-
     if isinstance(func, _functools.partial):
         # before Python 3.4, getargspec() did't work for functools.partial,
         # so it needs to be handled separately
-        argspec = getargspec(func.func)
+        argspec = _inspect.getfullargspec(func.func)
         nargs = len(argspec.args) - len(func.args)
         if func.keywords is not None:
             nargs -= len(func.keywords)
@@ -274,7 +268,7 @@ cdef int _callback_num_args(func):
                 not (_inspect.ismethod(func) or _inspect.isfunction(func))):
             func = func.__call__
 
-        argspec = getargspec(func)
+        argspec = _inspect.getfullargspec(func)
         nargs = len(argspec.args)
 
         if _inspect.ismethod(func):
