@@ -5,7 +5,6 @@ Python bindings for the liblo OSC library.
 ## Requirements
 
 * [Python](https://www.python.org/) (`>=3.7`)
-* [Cython](https://www.cython.org/) (`>=0.29`)
 * [liblo][liblo] (`>=0.27`)
 
 ## Installation
