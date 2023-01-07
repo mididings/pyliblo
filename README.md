@@ -33,7 +33,7 @@ pip install dist/*.whl
 
 ## License
 
-LGPL-2.1-or-later as per [LICENSE](LICENSE).
+LGPL-2.1-or-later as per [LICENSE](COPYING).
 
 Copyright (C) 2007-2015  Dominic Sacré  <dominic.sacre@gmx.de>
 
