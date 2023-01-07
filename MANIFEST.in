@@ -13,7 +13,7 @@ include setup.py
 include src/*.pyx src/*.pxd
 
 # python source
-include liblo/*.pyi
+graft liblo
 
 # scripts
 include scripts/*_osc
