@@ -224,7 +224,9 @@ cdef list _extract_args(const_char *types, lo_arg **argv):
         elif t == b'I': v = float('inf')
         elif t == b'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
         elif t == b't': v = _timetag_to_double(argv[i].t)
-        elif t == b'b': v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
+        elif t == b'b':
+            size = lo_blob_datasize(argv[i])
+            v = (<unsigned char*>lo_blob_dataptr(argv[i]))[:size]
         else:
             v = None  # unhandled data type
         args.append(v)
