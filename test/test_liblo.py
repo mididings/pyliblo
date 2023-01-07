@@ -58,7 +58,7 @@ class ServerTestCase(ServerTestCaseBase):
         self.assertEqual(self.server.port, 1234)
 
     def testURL(self):
-        self.assertTrue(matchHost(self.server.url, 'osc\.udp://.*:1234/'))
+        self.assertTrue(matchHost(self.server.url, r'osc\.udp://.*:1234/'))
 
     def testSendInt(self):
         self.server.add_method('/foo', 'i', self.callback, "data")
@@ -68,7 +68,7 @@ class ServerTestCase(ServerTestCaseBase):
         self.assertEqual(self.cb.args[0], 123)
         self.assertEqual(self.cb.types, 'i')
         self.assertEqual(self.cb.data, "data")
-        self.assertTrue(matchHost(self.cb.src.url, 'osc\.udp://.*:1234/'))
+        self.assertTrue(matchHost(self.cb.src.url, r'osc\.udp://.*:1234/'))
 
     def testSendBlob(self):
         self.server.add_method('/blob', 'b', self.callback)
@@ -250,11 +250,11 @@ class ServerCreationTestCase(unittest.TestCase):
         t = liblo.Server('5678')
         self.assertEqual(s.port, 1234)
         self.assertEqual(t.port, 5678)
-        self.assertTrue(matchHost(s.url, 'osc\.udp://.*:1234/'))
+        self.assertTrue(matchHost(s.url, r'osc\.udp://.*:1234/'))
 
     def testPortProto(self):
         s = liblo.Server(1234, liblo.TCP)
-        self.assertTrue(matchHost(s.url, 'osc\.tcp://.*:1234/'))
+        self.assertTrue(matchHost(s.url, r'osc\.tcp://.*:1234/'))
 
 
 class ServerTCPTestCase(ServerTestCaseBase):
