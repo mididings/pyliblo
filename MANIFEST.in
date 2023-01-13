@@ -1,5 +1,5 @@
 # general documentation
-include README COPYING NEWS
+include README.md COPYING NEWS
 
 # module documentation
 graft doc

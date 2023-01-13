@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "pyliblo"
 version = "0.10.0"
 description = 'Python bindings for the liblo OSC library'
-readme = "README"
+readme = "README.md"
 requires-python = ">=3.7"
 license = {file = "COPYING"}
 authors = [{name = "Dominic Sacré", email = "dominic.sacre@gmx.de"},]
