@@ -1,5 +1,9 @@
 [build-system]
-requires = ["setuptools>=65", "wheel>=0.38", "Cython>=0.29"]
+requires = [
+  "setuptools>=65",
+  "wheel>=0.38",
+  "Cython>=0.29",
+]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -15,6 +19,8 @@ classifiers = [
   "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
 ]
 
+[project.optional-dependencies]
+test = ["pytest",]
 
 [project.urls]
 homepage = "https://github.com/mididings/pyliblo"
