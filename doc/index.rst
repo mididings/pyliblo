@@ -4,17 +4,17 @@
 pyliblo 0.10 API Documentation
 ##############################
 
-Homepage: http://das.nasophon.de/pyliblo/
+Homepage: https://github.com/mididings/pyliblo/
 
 The latest version of this manual can be found at
-http://dsacre.github.io/pyliblo/doc/.
+https://mididings.github.io/pyliblo/.
 
 For the most part, pyliblo is just a thin wrapper around
-`liblo <http://liblo.sourceforge.net/>`_, which does
+`liblo <https://liblo.sourceforge.net/>`_, which does
 all the real work.
 For questions not answered here, also see the
-`liblo documentation <http://liblo.sourceforge.net/docs/modules.html>`_
-and the `OSC spec <http://opensoundcontrol.org/spec-1_0>`_.
+`liblo documentation <https://liblo.sourceforge.net/docs/modules.html>`_
+and the `OSC spec <https://opensoundcontrol.stanford.edu/spec-1_0.html>`_.
 
 
 Module-level Functions
