@@ -12,7 +12,7 @@
 __version__ = "0.10.0"
 
 
-cdef extern from 'Python.h':
+cdef extern from "Python.h":
     void Py_Initialize()
 
 from libc.stdlib cimport malloc, free
@@ -30,7 +30,7 @@ class _weakref_method:
     """
     Weak reference to a function, including support for bound methods.
     """
-    __slots__ = ('_func', 'obj')
+    __slots__ = ("_func", "obj")
 
     def __init__(self, f):
         if _inspect.ismethod(f):
@@ -211,20 +211,20 @@ cdef list _extract_args(const_char *types, lo_arg **argv):
 
     for i from 0 <= i < len(types):
         t = types[i]
-        if   t == b'i': v = argv[i].i
-        elif t == b'h': v = argv[i].h
-        elif t == b'f': v = argv[i].f
-        elif t == b'd': v = argv[i].d
-        elif t == b'c': v = chr(argv[i].c)
-        elif t == b's': v = _decode(&argv[i].s)
-        elif t == b'S': v = _decode(&argv[i].s)
-        elif t == b'T': v = True
-        elif t == b'F': v = False
-        elif t == b'N': v = None
-        elif t == b'I': v = float('inf')
-        elif t == b'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
-        elif t == b't': v = _timetag_to_double(argv[i].t)
-        elif t == b'b':
+        if   t == b"i": v = argv[i].i
+        elif t == b"h": v = argv[i].h
+        elif t == b"f": v = argv[i].f
+        elif t == b"d": v = argv[i].d
+        elif t == b"c": v = chr(argv[i].c)
+        elif t == b"s": v = _decode(&argv[i].s)
+        elif t == b"S": v = _decode(&argv[i].s)
+        elif t == b"T": v = True
+        elif t == b"F": v = False
+        elif t == b"N": v = None
+        elif t == b"I": v = float("inf")
+        elif t == b"m": v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
+        elif t == b"t": v = _timetag_to_double(argv[i].t)
+        elif t == b"b":
             size = lo_blob_datasize(argv[i])
             v = (<unsigned char*>lo_blob_dataptr(argv[i]))[:size]
         else:
@@ -266,7 +266,7 @@ cdef int _callback_num_args(func):
         if func.keywords is not None:
             nargs -= len(func.keywords)
     else:
-        if (hasattr(func, '__call__') and
+        if (hasattr(func, "__call__") and
                 not (_inspect.ismethod(func) or _inspect.isfunction(func))):
             func = func.__call__
 
@@ -339,7 +339,7 @@ class make_method:
         # we can't access the Server object here, because at the time the
         # decorator is run it doesn't even exist yet, so we store the
         # path/typespec in the function object instead...
-        if not hasattr(f, '_method_spec'):
+        if not hasattr(f, "_method_spec"):
             f._method_spec = []
         f._method_spec.append(self.spec)
         return f
@@ -354,7 +354,7 @@ cdef class _ServerBase:
     def __init__(self, **kwargs):
         self._keep_refs = []
 
-        if 'reg_methods' not in kwargs or kwargs['reg_methods']:
+        if "reg_methods" not in kwargs or kwargs["reg_methods"]:
             self.register_methods()
 
     cdef _check(self):
@@ -380,7 +380,7 @@ cdef class _ServerBase:
         # find and register methods that were defined using decorators
         methods = []
         for m in _inspect.getmembers(obj):
-            if hasattr(m[1], '_method_spec'):
+            if hasattr(m[1], "_method_spec"):
                 for spec in m[1]._method_spec:
                     methods.append(struct(spec=spec, name=m[1]))
         # sort by counter
@@ -928,7 +928,7 @@ cdef class Message:
         cdef char* cbuf = buf;
         self._message = lo_message_deserialise(cbuf, len(buf), &result)
         if self._message == NULL:
-            raise ValueError('Deserialisation failed (code {})'.format(result))
+            raise ValueError("Deserialisation failed (code {})".format(result))
         self._path = lo_get_path(cbuf, len(buf))
 
     @classmethod
@@ -969,37 +969,37 @@ cdef class Message:
         # accept both bytes and unicode as type specifier
         cdef char t = ord(_decode(type)[0])
 
-        if t == b'i':
+        if t == b"i":
             lo_message_add_int32(self._message, int(value))
-        elif t == b'h':
+        elif t == b"h":
             lo_message_add_int64(self._message, long(value))
-        elif t == b'f':
+        elif t == b"f":
             lo_message_add_float(self._message, float(value))
-        elif t == b'd':
+        elif t == b"d":
             lo_message_add_double(self._message, float(value))
-        elif t == b'c':
+        elif t == b"c":
             lo_message_add_char(self._message, ord(value))
-        elif t == b's':
+        elif t == b"s":
             s = _encode(value)
             lo_message_add_string(self._message, s)
-        elif t == b'S':
+        elif t == b"S":
             s = _encode(value)
             lo_message_add_symbol(self._message, s)
-        elif t == b'T':
+        elif t == b"T":
             lo_message_add_true(self._message)
-        elif t == b'F':
+        elif t == b"F":
             lo_message_add_false(self._message)
-        elif t == b'N':
+        elif t == b"N":
             lo_message_add_nil(self._message)
-        elif t == b'I':
+        elif t == b"I":
             lo_message_add_infinitum(self._message)
-        elif t == b'm':
+        elif t == b"m":
             for n from 0 <= n < 4:
                 midi[n] = value[n]
             lo_message_add_midi(self._message, midi)
-        elif t == b't':
+        elif t == b"t":
             lo_message_add_timetag(self._message, _double_to_timetag(value))
-        elif t == b'b':
+        elif t == b"b":
             b = _Blob(value)
             # make sure the blob is not deleted as long as this message exists
             self._keep_refs.append(b)
@@ -1025,7 +1025,7 @@ cdef class Message:
             lo_message_add_string(self._message, s)
         elif value is None:
             lo_message_add_nil(self._message)
-        elif value == float('inf'):
+        elif value == float("inf"):
             lo_message_add_infinitum(self._message)
         else:
             # last chance: could be a blob
@@ -1033,7 +1033,7 @@ cdef class Message:
                 iter(value)
             except TypeError:
                 raise TypeError("unsupported message argument type")
-            self._add('b', value)
+            self._add("b", value)
 
     def serialise(self):
         """

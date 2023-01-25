@@ -13,7 +13,7 @@ from libc.stdint cimport int32_t, uint32_t, int64_t, uint8_t
 from libc.stdio cimport const_char
 
 
-cdef extern from 'lo/lo.h':
+cdef extern from "lo/lo.h":
     # type definitions
     ctypedef void *lo_server
     ctypedef void *lo_server_thread
