@@ -13,8 +13,8 @@ setup(
         (
             "share/man/man1",
             [
-                "scripts/send_osc.1",
-                "scripts/dump_osc.1",
+                "doc/man/send_osc.1",
+                "doc/man/dump_osc.1",
             ],
         ),
     ],
