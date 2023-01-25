@@ -4,3 +4,4 @@ __pycache__
 *.egg-info
 src/*.c
 doc/build
+doc/man/*.1
