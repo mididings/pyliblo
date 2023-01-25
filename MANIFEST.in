@@ -15,11 +15,8 @@ include src/*.pyx src/*.pxd
 # python source
 graft liblo
 
-# scripts
-include scripts/*_osc
-
-# man pages
-include scripts/*.1
+# CLI scripts
+graft scripts
 
 # test suite
 include test/*.py
